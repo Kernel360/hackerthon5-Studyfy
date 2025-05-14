@@ -22,14 +22,14 @@ public class StudyApplication extends BaseEntity {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id", nullable = false)
-    private Member applicatedMember;
+    private Member applicatedMemberEntity;
 
     @Column
     private ApplicationStatus applicationStatus;
 
-    public StudyApplication(StudyEntity study, Member applicatedMember){
+    public StudyApplication(StudyEntity study, Member applicatedMemberEntity){
         this.study = study;
-        this.applicatedMember = applicatedMember;
+        this.applicatedMemberEntity = applicatedMemberEntity;
         this.applicationStatus = ApplicationStatus.PENDING;
     }
 

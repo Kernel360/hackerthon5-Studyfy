@@ -1,5 +1,8 @@
 package org.example.studyfy.study.dto;
 
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -13,30 +16,49 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class StudyRequestDto {
-//    private Long creatorId;
+
+    private Long creatorId;
+
+    @NotNull(message = "카테고리는 필수입니다.")
     private Long categoryId;
+
+    @NotBlank(message = "제목은 필수입니다.")
     private String title;
+
+    @NotBlank(message = "목표는 필수입니다.")
     private String goal;
+
+    @NotBlank(message = "설명은 필수입니다.")
     private String description;
+
+    @Min(value = 1, message = "최대 참가자는 최소 1명 이상이어야 합니다.")
     private int max_participants;
-    private String method; // 스터디 진행 방식
-    private LocalDateTime duration_start; // 시작일
-    private LocalDateTime duration_end; // 종료일
-    private LocalDateTime deadline; // 모집 마감일
+
+    @NotBlank(message = "진행 방식은 필수입니다.")
+    private String method;
+
+    @NotNull(message = "시작일은 필수입니다.")
+    private LocalDateTime duration_start;
+
+    @NotNull(message = "종료일은 필수입니다.")
+    private LocalDateTime duration_end;
+
+    @NotNull(message = "모집 마감일은 필수입니다.")
+    private LocalDateTime deadline;
 
 
-    public StudyEntity toEntity(Long memberId, StudyRequestDto dto) {
+    public StudyEntity toEntity(Long memberId) {
         return StudyEntity.builder()
                 .creatorId(memberId)
-                .categoryId(dto.getCategoryId())
-                .title(dto.getTitle())
-                .goal(dto.getGoal())
-                .description(dto.getDescription())
-                .max_participants(dto.getMax_participants())
-                .method(dto.getMethod())
-                .duration_start(dto.getDuration_start())
-                .duration_end(dto.getDuration_end())
-                .deadline(dto.getDeadline())
+                .categoryId(categoryId)
+                .title(title)
+                .goal(goal)
+                .description(description)
+                .max_participants(max_participants)
+                .method(method)
+                .duration_start(duration_start)
+                .duration_end(duration_end)
+                .deadline(deadline)
                 .build();
     }
 }
